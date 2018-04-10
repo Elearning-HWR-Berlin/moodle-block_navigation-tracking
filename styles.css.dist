@@ -1,0 +1,105 @@
+.block_navigationbs .header .title h2:before {
+    content:"\f086" !important;
+}
+.block_navigationbs .content{
+    margin-left: -5px;
+    padding: 0 !important;
+}
+.block_navigationbs ul{
+    margin-left: 4px;
+}
+.block_navigationbs li {
+    list-style: none;
+    padding-left: 8px;
+}
+
+
+.block_navigationbs form.togglecompletion{
+    display: inline-block;
+    float: right;
+}
+.block_navigationbs span.autocompletion {
+    float: right;
+}
+.block_navigationbs div.content > div {
+    background-color: #ffffff;
+    margin: 10px 0 5px 0;
+}
+.block_navigationbs div.content > div.empty {
+    padding-bottom: 0;
+}
+
+.block_navigationbs div.content  ul{
+    margin: 0 8px;
+}
+
+.block_navigationbs div.sectionheader{
+    background-color: #efefef;
+    margin: 0;
+    padding: 8px 0;
+}
+
+.block_navigationbs div.sectionheader img.completed{
+    margin-right: 5px;
+    margin-top: 3px;
+}
+
+.block_navigationbs div.sectionbody{
+    padding: 8px 0 16px;
+
+}
+
+.block_navigationbs div.sectionheader .chevron{
+    padding: 10px;
+    background-color: #d7272d;
+    color: white;
+    margin-right: 5px;
+}
+
+.block_navigationbs .sectionbody li{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #efefef;
+    border-bottom: 1px solid #cccccc;
+}
+
+.block_navigationbs li a {
+    color: #a37f34;
+    text-transform: capitalize;
+}
+
+.block_navigationbs a {
+    color: #a37f34;
+    line-height: 2.1;
+}
+.block_navigationbs li.completion_imcomplete{
+    background-color: #fafafa;
+}
+.block_navigationbs li.completion_complete{
+    background-color: #e0efce;
+}
+.block_navigationbs li.completion_fail{
+    background-color: #ff6600;
+}
+
+.block_navigationbs form.togglecompletion div{
+    display: inline-block;
+}
+.block_navigationbs form div input {
+    width: 12px;
+    height: 12px;
+}
+
+.block_navigationbs div.section.empty span.chevron{
+    cursor: not-allowed;
+}
+.block_navigationbs div.section:not(.empty) span.chevron{
+    cursor: pointer;
+}
+
+
+.block_navigationbs .activityicon {
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+}

@@ -1,0 +1,184 @@
+<?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * block_navigationbs class
+ *
+ * Used to produce the navigation for berlin school courses
+ *
+ * @package     block_navigationbs
+ * @copyright   Synergy Learning
+ * @author      Gerry G Hall 2016
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+class block_navigationbs extends block_base {
+
+    /**
+     * Set the initial properties for the block
+     */
+    public function init() {
+        $this->title = get_string('pluginname', 'block_navigationbs');
+    }
+
+    /**
+     * Allow multiple instances of this block
+     * @return bool Returns false
+     */
+    public function instance_allow_multiple() {
+        return true;
+    }
+
+    /**
+     * Has this block got configuration
+     * @return bool Returns false
+     */
+    public function has_config() {
+        return true;
+    }
+
+    /**
+     * Allow the user to configure a block instance
+     * @return bool Returns true
+     */
+    public function instance_allow_config() {
+        return true;
+    }
+
+    /**
+     * Set up a particular instance of this class given data from the block_insances
+     * table and the current page.
+     */
+    public function specialization() {
+        if (empty($this->config->title)) {
+            $this->title = get_string('pluginname', 'block_navigationbs');
+        } else {
+            $this->title = $this->config->title;
+        }
+    }
+
+    /**
+     * Set the applicable formats for this block to all
+     * @return array
+     */
+    public function applicable_formats() {
+        return ['course' => true, 'mod' => true];
+    }
+
+    /**
+     * Gets Javascript that may be required for navigationbs
+     */
+    public function get_required_javascript() {
+        $this->page->requires->js_call_amd('block_navigationbs/navblock', 'init', array());
+    }
+
+    public function get_content() {
+        global $PAGE;
+
+        if ($this->content !== null) {
+            return $this->content;
+        }
+
+        if (empty($this->instance)) {
+            return null;
+        }
+
+        $this->content = new stdClass();
+        $this->content->footer = '';
+        $this->content->text = $this->get_content_data($PAGE->course);
+
+        return $this->content;
+    }
+
+    /**
+     * Returns the role that best describes the navigationbs block... 'navigation'
+     *
+     * @return string 'navigation'
+     */
+    public function get_aria_role() {
+        return 'navigation';
+    }
+
+     /**
+      * @param object $course
+      * @return string
+      */
+    protected function get_content_data($course) {
+        global $CFG, $USER, $DB, $PAGE;
+
+        // Only show this block on courses which use Topics.
+        require_once($CFG->dirroot . '/course/format/lib.php');
+        $format = course_get_format($course);
+        if (!$format->uses_sections()) {
+            return '';
+        }
+
+        $course = $format->get_course();
+        $cmid = null;
+        $latestsection = new stdClass();
+        $url = $PAGE->url->get_path();
+
+        // The section id if the section parameter exists, otherwise it's null.
+        $opensection = optional_param('section', null, PARAM_INT);
+
+        if (stripos($url, 'course/view')) {
+            // For the course page get the last logged section.
+            $latestsection = $DB->get_record_sql("
+            SELECT m.name as modulename, cs.section
+            FROM {block_navigationbs_log} nblog
+            JOIN {course_modules} cm ON cm.id = nblog.moduleid
+            JOIN {modules} m ON m.id = cm.module
+            JOIN {course_sections} cs ON cs.id = cm.section
+            WHERE nblog.userid = :userid AND nblog.courseid = :courseid
+            ORDER BY nblog.timecreated DESC LIMIT 1",
+                ['userid' => $USER->id, 'courseid' => $course->id]
+            );
+
+        } else {
+            if ($PAGE->cm) {
+                // A module page.
+                $cmid = $PAGE->cm->id; // Module id.
+
+                // Get the section that contains this module.
+                $latestsection = $DB->get_record_sql("
+                SELECT m.name as modulename, cs.section
+                FROM {course_modules} cm
+                JOIN {modules} m ON m.id = cm.module
+                JOIN {course_sections} cs ON cs.id = cm.section
+                WHERE cm.id = :moduleid LIMIT 1",
+                    ['moduleid' => $cmid]
+                );
+
+                // Log this module page view in block_navigationbs_log table.
+                $insertdata = new stdClass();
+                $insertdata->userid = $USER->id;
+                $insertdata->moduleid = $cmid;
+                $insertdata->courseid = $course->id;
+                $insertdata->timecreated = time();
+                $DB->insert_record('block_navigationbs_log', $insertdata);
+
+            }
+        }
+
+        if (!empty($latestsection) && isset($latestsection->section)) {
+            $opensection = $latestsection->section;
+        }
+
+        /**  @var $renderer block_navigationbs_renderer */
+        $renderer = $this->page->get_renderer('block_navigationbs');
+        return $renderer->render_sections($course, $opensection, $cmid);
+
+    }
+}

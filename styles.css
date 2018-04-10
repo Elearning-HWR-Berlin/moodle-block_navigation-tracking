@@ -1,0 +1,127 @@
+.block_navigationbs .header .title h2:before {
+    content:"\f046" !important;
+}
+.block_navigationbs .content{
+    margin-left: -5px;
+    padding: 0 !important;
+}
+.block_navigationbs ul{
+    margin-left: 4px;
+}
+.block_navigationbs li {
+    list-style: none;
+    padding-left: 8px;
+}
+
+.block_navigationbs.block {
+    font-size: 12px;
+}
+
+
+.block_navigationbs form.togglecompletion{
+    display: inline-block;
+    float: right;
+}
+.block_navigationbs span.autocompletion {
+    float: right;
+}
+.block_navigationbs div.content > div {
+    background-color: #ffffff;
+    margin: 10px 0 5px 0;
+}
+.block_navigationbs div.content > div.empty {
+    padding-bottom: 0;
+}
+
+.block_navigationbs div.content  ul{
+    margin: 0px;
+}
+
+.block_navigationbs div.sectionheader{
+    background-color: #efefef;
+    margin: 0;
+    display: table;
+    width: 100%;
+    position: relative;
+    }
+
+.block_navigationbs div.sectionheader a {
+    margin-top: 15px;
+    width: 87%;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.block_navigationbs div.sectionheader img.completed{
+    margin-right: 5px;
+    margin-top: 3px;
+}
+
+.block_navigationbs div.sectionbody{
+    padding: 0;
+
+}
+
+.block_navigationbs div.sectionheader .chevron{
+    padding: 10px 12px;
+    background-color: #d7272d;
+    color: white;
+    margin-right: 5px;
+    display: block;
+}
+
+.block_navigationbs .sectionbody li{
+    padding: 5px 0 5px 43px;
+    background-color: #efefef;
+    border-bottom: 1px solid #efefef;
+    position: relative;
+}
+
+.block_navigationbs li a {
+    color: #656068;
+    text-transform: capitalize;
+}
+
+.block_navigationbs a {
+    color: #656068;
+    line-height: 20px;
+}
+
+.block_navigationbs a:visited {
+    color: #656068;
+}
+
+.block_navigationbs li.completion_imcomplete{
+    background-color: #fafafa;
+}
+.block_navigationbs li.completion_complete{
+    background-color: #e0efce;
+}
+.block_navigationbs li.completion_fail{
+    background-color: #ff6600;
+}
+
+.block_navigationbs form.togglecompletion div{
+    display: inline-block;
+}
+.block_navigationbs form div input {
+    width: 12px;
+    height: 12px;
+}
+
+.block_navigationbs div.section.empty span.chevron{
+    cursor: not-allowed;
+}
+.block_navigationbs div.section:not(.empty) span.chevron{
+    cursor: pointer;
+}
+
+
+.block_navigationbs .activityicon {
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+    position: absolute;
+    top: 7px;
+    left: 23px;
+}
