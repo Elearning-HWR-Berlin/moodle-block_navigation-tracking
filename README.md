@@ -49,4 +49,4 @@ the configuration input fields.
 
 ## Contribute
 
-We are currently looking for developers to help us maintain the plugin in the future! If you are interested please shoot a message to: bjoern.lefers@hwr-berlin.de 
+We are currently looking for developers to help us maintain the plugin in the future! If you are interested please shoot a message to: bjoern@lefers.com 
