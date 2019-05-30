@@ -73,7 +73,7 @@ class block_navigationbs_renderer extends plugin_renderer_base {
             $attrb = [];
 
             $toggleimage = html_writer::img(
-                $this->output->pix_url(
+                $this->output->image_url(
                     'collapsed',
                     'block_navigationbs'
                 ),
@@ -112,7 +112,7 @@ class block_navigationbs_renderer extends plugin_renderer_base {
 
                 if ($sectionmodules->completion == 1) {
                     $class .= ' completed clearfix';
-                    $tick = html_writer::img($this->output->pix_url('i/valid'), 'completed', ['class' => 'completed pull-right'] );
+                    $tick = html_writer::img($this->output->image_url('i/valid'), 'completed', ['class' => 'completed pull-right'] );
                 }
                 // Find out if this is the currently view section either by it's view status or it's.
                 if (($opensection === null && $firstsection) || ($opensection == $id && !$active && $section->uservisible)) {
@@ -120,7 +120,7 @@ class block_navigationbs_renderer extends plugin_renderer_base {
                     $active = true;
                     $class .= ' expanded';
                     $toggleimage = html_writer::img(
-                        $this->output->pix_url(
+                        $this->output->image_url(
                             'expanded',
                             'block_navigationbs'
                         ),
@@ -188,7 +188,7 @@ class block_navigationbs_renderer extends plugin_renderer_base {
         $out .= html_writer::start_div ("sectionheader");
 
         $out .= html_writer::span(
-            html_writer::img($this->output->pix_url('collapsed', 'block_navigationbs'), 'collapsed', array('height' => '15px'))
+            html_writer::img($this->output->image_url('collapsed', 'block_navigationbs'), 'collapsed', array('height' => '15px'))
             , 'chevron');
         $out .= $sectionname;
         $out .= html_writer::end_div ();
@@ -318,7 +318,7 @@ class block_navigationbs_renderer extends plugin_renderer_base {
             $icon = $oldicon = $mod->get_icon_url();
             // Find out if we have a incon to override with.
             if (file_exists($CFG->dirroot."/blocks/navigationbs/pix/mod/{$mod->modname}")) {
-                $icon = $this->output->pix_url("mod/{$mod->modname}/icon", 'block_navigationbs');
+                $icon = $this->output->image_url("mod/{$mod->modname}/icon", 'block_navigationbs');
             } else if ($mod->name == 'file') {// If not is the mod name file.
                 $icon = new moodle_url(str_replace('core', 'block_navigationbs', $oldicon->get_path()));
             }
